@@ -15,3 +15,13 @@
    // return view('welcome');
 //});
 Route::get('/','InvestmentsController@index')->name('home');
+Route::post('/','InvestmentsController@search')->name('home');
+
+Route::get('/register','RegistrationController@create');
+Route::post('/register','RegistrationController@store');
+
+Route::get('/login','SessionController@create');
+Route::post('/login','SessionController@store');
+
+
+Route::get('/logout','SessionController@destroy');

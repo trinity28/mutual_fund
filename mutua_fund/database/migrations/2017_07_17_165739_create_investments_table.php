@@ -16,9 +16,12 @@ class CreateInvestmentsTable extends Migration
         Schema::create('investments', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
+            $table->integer('scheme_id');
             $table->integer('buy_nav');
+            $table->integer('current_nav');
+            $table->integer('current_value');
             $table->integer('invest_amnt');
-            $table->date('buy_date');
+           // $table->date('buy_date');
             $table->timestamps();
         });
     }

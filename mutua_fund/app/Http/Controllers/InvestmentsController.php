@@ -7,18 +7,25 @@ use Illuminate\Http\Request;
 // require ‘\vendor\autoload.php’;
 //use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
-
+use App\Investment;
+use Auth;
 class InvestmentsController extends Controller
 {
- 
-   public function __construct()
-   {
-      $this->middleware('auth');
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index']);
     }
+  
       public function index()
     {
-     
-      return view('welcome');
+          if (Auth::guest()) {
+           return redirect('/login');
+          }
+      $posts= Investment::where('user_id',auth()->id())->get();
+       
+    // $posts=Investment::latest()->get();
+    
+      return view('welcome',compact('posts'));
     
     }
     public function search()
@@ -29,48 +36,35 @@ class InvestmentsController extends Controller
                       "Content-Type" => "application/json",
                       "Accept" => "application/json"
       ];
-
-       
         $keyword = request('keyword');
         $GetOrder = [
-           
-               
-                //"scodes"=>[119018,100520,119528,120503,118533]
-                 "search"=>[$keyword]
-            
-
+                "scodes"=>[$keyword]
+                 //"search"=>[$keyword]
         ];
 
-        $client = new client();
+       
         $res = $client->post('https://mutualfundsnav.p.mashape.com/', [
             'headers' => $headers, 
             'json' => $GetOrder,
         ]);
-         
-                 // echo $res->getStatusCode();
-                // "200"
-                //echo $res->getHeader('content-type');
-                // 'application/json; charset=utf8'
-                echo $res->getBody();
+       // $obj = json_decode($res);
+        //echo $obj->nav; 
+                echo $res->getBody()->getcontents();
     }
 
       public function store()
     {
-       $this->validate(request(),[
-          'scheme_id'=>'required',
-          'buy_nav'=>'required',
 
-          'invest_amnt'=>'required'
-
-
-           ]);
-       Investment::create([ 
-        'user_id'=>auth()->id(),
-      'scheme_id' => request('code'),
+      Investment::create([
+    'scheme_id' => request('code'),
       'buy_nav' => request('bnav'),
-      'invest_amnt' => request('invest')
-      ]);
-       redirect('/');
+      'invest_amnt' => request('invest'),
+      'current_value'=>request('invest'),
+     'current_nav'=>request('bnav'),
+    'user_id'=>auth()->id()
+          ]);
+      
+         return back();
     }
 }
 

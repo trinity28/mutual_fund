@@ -14,8 +14,10 @@
 //Route::get('/', function () {
    // return view('welcome');
 //});
+
 Route::get('/','InvestmentsController@index')->name('home');
-Route::post('/','InvestmentsController@search')->name('home');
+Route::post('/','InvestmentsController@search');
+Route::post('/investment','InvestmentsController@store');
 
 Route::get('/register','RegistrationController@create');
 Route::post('/register','RegistrationController@store');

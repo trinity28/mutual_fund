@@ -1,7 +1,13 @@
 @extends('layouts/master')
 @section('content')
 
-         <form method='POST' method="/">
+  @foreach($posts as $post)
+    {{ $post->invest_amnt }} on 
+{{ $post->buy_nav }} on{{ $post->current_nav }}
+              {{ $post->created_at }}
+        
+      @endforeach
+         <form method='POST' action="/">
         {{ csrf_field()}}
 
         
@@ -17,7 +23,7 @@
 
         </form>
         <br />
-  <form method='POST' method="/">
+  <form method='POST' action="/investment">
         {{ csrf_field()}}
 
           <div class="form-group">

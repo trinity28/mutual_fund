@@ -17,6 +17,7 @@
 
 Route::get('/','InvestmentsController@index')->name('home');
 Route::post('/','InvestmentsController@search');
+Route::post('/detail','InvestmentsController@details_of_fund');
 Route::post('/investment','InvestmentsController@store');
 
 Route::get('/register','RegistrationController@create');

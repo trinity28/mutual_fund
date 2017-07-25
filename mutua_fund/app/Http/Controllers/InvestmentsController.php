@@ -45,8 +45,18 @@ class InvestmentsController extends Controller
         ]);
       
         $array = json_decode($res->getBody()->getContents(), true);
+       //$fdate =$p->created_at;
+      //$tdate =  new DateTime();
+      //$datetime1 = new DateTime($fdate);
+      //$datetime2 = new DateTime();
+      ///$interval = $datetime1->diff($datetime2);
+      //$days = $interval->format('%a');
+
        
+
+  
          $p->current_nav= $array[0]['nav'];
+         $p->current_value= $p->current_value*(1+(($p->current_nav - $p->buy_nav)/ $p->buy_nav) );
          $p->save();
 
              
@@ -90,7 +100,7 @@ class InvestmentsController extends Controller
                       "Content-Type" => "application/json",
                       "Accept" => "application/json"
       ];
-        $keyword = request('keyword');
+        $keyword = request('code');
         $GetOrder = [
                 "scodes"=>[$keyword]
                  

@@ -22,8 +22,8 @@
 
         </form>
            @else
-            <a  href="/login">Login</a>
-           <a  href="/register">Register</a>
+            <a class="navbar-text" href="/login">login</a>
+           <a class="navbar-text" href="/register">register</a>
           @endif
         </nav>
       </div>

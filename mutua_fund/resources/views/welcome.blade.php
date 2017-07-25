@@ -45,8 +45,10 @@
     </div>
   </div>
    <form class="navbar-form navbar-left" method='POST' action="/detail">
+    {{ csrf_field()}}
+
       <div class="form-group">
-        <input type="text" id='keyword' name='keyword' class='form-control' placeholder='enter scheme code to find details'>
+        <input type="text" id='code' name='code' class='form-control' placeholder='enter scheme code to find details'>
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>

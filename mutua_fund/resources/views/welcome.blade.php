@@ -55,7 +55,7 @@
     
 </div>
  <h2>Your Investments:-</h2>
-<table class="table table-bordered">
+<table class="table table-bordered" id="example">
          <thead>
       <tr>
         <th>Scheme_Code</th>
@@ -78,7 +78,10 @@
     </tbody>
      @endforeach
   </table>
-        
+     <script type="text/javascript">
+     $(document).ready(function() {
+    $('#example').DataTable();
+} );   </script>
 
 
 

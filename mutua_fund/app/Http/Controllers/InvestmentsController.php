@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
  use GuzzleHttp\Client;
-// require ‘\vendor\autoload.php’;
-//use GuzzleHttp\Client;
+
 use GuzzleHttp\Exception\RequestException;
 use App\Investment;
+use Yajra\Datatables\Datatables;
 use Auth;
 class InvestmentsController extends Controller
 {

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use GuzzleHttp\Exception\RequestException;
 use App\Investment;
+use App\history;
 use Yajra\Datatables\Datatables;
 use Auth;
 class InvestmentsController extends Controller
@@ -32,6 +33,7 @@ class InvestmentsController extends Controller
                             "Content-Type" => "application/json",
                             "Accept" => "application/json"
             ];
+
          $keyword = $p->scheme_id;
         $GetOrder = [
                 "scodes"=>[$keyword]
@@ -42,6 +44,11 @@ class InvestmentsController extends Controller
         $res = $client->post('https://mutualfundsnav.p.mashape.com/', [
             'headers' => $headers, 
             'json' => $GetOrder,
+            'curl'  => [
+                  CURLOPT_PROXY => '192.168.1.107',
+                  CURLOPT_PROXYPORT => 3128,
+                  CURLOPT_PROXYUSERPWD => 'ipg_2015048:apple28',
+             ],
         ]);
       
         $array = json_decode($res->getBody()->getContents(), true);
@@ -85,6 +92,11 @@ class InvestmentsController extends Controller
         $res = $client->post('https://mutualfundsnav.p.mashape.com/', [
             'headers' => $headers, 
             'json' => $GetOrder,
+             'curl'  => [
+                  CURLOPT_PROXY => '192.168.1.107',
+                  CURLOPT_PROXYPORT => 3128,
+                  CURLOPT_PROXYUSERPWD => 'ipg_2015048:apple28',
+             ],
         ]);
       
        // $array = json_decode($res->getBody()->getContents(), true);
@@ -110,6 +122,11 @@ class InvestmentsController extends Controller
         $res = $client->post('https://mutualfundsnav.p.mashape.com/', [
             'headers' => $headers, 
             'json' => $GetOrder,
+            'curl'  => [
+                  CURLOPT_PROXY => '192.168.1.107',
+                  CURLOPT_PROXYPORT => 3128,
+                  CURLOPT_PROXYUSERPWD => 'ipg_2015048:apple28',
+             ],
         ]);
       
         $array = json_decode($res->getBody()->getContents(), true);
@@ -120,7 +137,7 @@ class InvestmentsController extends Controller
 
       public function store()
     {
-
+       
       Investment::create([
     'scheme_id' => request('code'),
       'buy_nav' => request('bnav'),
@@ -132,6 +149,30 @@ class InvestmentsController extends Controller
       
          return back();
     }
+
+
+     public function CloseInvestment($id)
+    {
+       
+      $account = Investment::find($id);
+      history::create([
+    'scheme_id' =>  $account->scheme_id,
+      'buy_nav' => $account->buy_nav,
+      'invest_amnt' => $account->invest_amnt,
+      'final_value'=>$account->current_value,
+    'user_id'=>auth()->id()
+          ]);
+       
+        $account->delete();
+        return back();
+    }
+     public function history()
+    {
+          
+      $funds= history::where('user_id',auth()->id())->get();
+      return view('history',compact('funds'));
+    }
+
 }
 
 

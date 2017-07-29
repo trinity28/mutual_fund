@@ -16,6 +16,12 @@
 //});
 
 Route::get('/','InvestmentsController@index')->name('home');
+
+Route::get('close_fund/{id}','InvestmentsController@CloseInvestment')->name('fund.delete');
+
+
+
+
 Route::post('/','InvestmentsController@search');
 Route::post('/detail','InvestmentsController@details_of_fund');
 Route::post('/investment','InvestmentsController@store');
@@ -25,6 +31,6 @@ Route::post('/register','RegistrationController@store');
 
 Route::get('/login','SessionController@create');
 Route::post('/login','SessionController@store');
-
+Route::get('/history','InvestmentsController@history');
 
 Route::get('/logout','SessionController@destroy');

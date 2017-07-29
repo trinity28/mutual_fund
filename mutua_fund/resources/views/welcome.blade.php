@@ -54,6 +54,7 @@
     </form>
     
 </div>
+ <a class="btn btn-primary" href="/history" style ="color:white">history</a>
  <h2>Your Investments:-</h2>
 <table class="table table-bordered" id="example">
          <thead>
@@ -63,6 +64,8 @@
         <th>investment amount</th>
         <th>current_nav</th>
         <th>current_value</th>
+        <th>Status</th>
+
       </tr>
     </thead>
        @foreach($posts as $post)
@@ -74,6 +77,8 @@
         <td>{{ $post->invest_amnt }}</td>
         <td>{{ $post->current_nav }}</td>
         <td>{{ $post->current_value }}</td>
+        <td> <a class="pl-5 mt-5 btn btn-danger" href="{{ route('fund.delete',$post->id) }}"> <i class=" glyphicon glyphicon-trash"></i>Close fund </a> </td>
+                   
       </tr>
     </tbody>
      @endforeach
@@ -82,21 +87,6 @@
      $(document).ready(function() {
     $('#example').DataTable();
 } );   </script>
-
-
-
-       
-
-
-
-
-
-
-
-
-
-
-
 
   
 @endsection
